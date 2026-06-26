@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="theme-color" content="#98d918"/>
+    <meta name="application-name" content="Cuenta TR"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="manifest" href="manifest.webmanifest"/>
+    <link rel="icon" href="img/icon-192.png"/>
+    <link rel="apple-touch-icon" href="img/icon-192.png"/>
+    <link href="CSS/index.css" rel="stylesheet"/>
+    <title>Cuenta TR</title>
+    <style>
+        .landing-shell {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background-color: var(--background);
+        }
+        .landing-card {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(194, 202, 175, 0.5);
+            border-radius: 2rem;
+            box-shadow: 0 24px 55px rgba(48, 67, 10, 0.12);
+            padding: 2.2rem;
+            text-align: center;
+        }
+        .landing-logo {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 1.5rem;
+        }
+        .landing-copy h1 {
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: -0.03em;
+        }
+        .landing-copy p {
+            margin: 0.75rem auto 1.75rem;
+            color: var(--on-surface-variant);
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    <main class="landing-shell">
+        <section class="landing-card">
+            <img class="landing-logo" src="img/TR Icono.png" alt="Logo Cuenta TR" />
+            <div class="landing-copy">
+                <h1>Cuenta TR</h1>
+                <p>Accede a tu área segura de forma rápida y confiable.</p>
+            </div>
+            <a class="primary-button" href="HTML/login.html">Ir al login</a>
+        </section>
+    </main>
+    <script src="JS/pwa.js"></script>
+</body>
+</html>

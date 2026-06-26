@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#98d918" />
+	<meta name="application-name" content="Cuenta TR" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+	<link rel="manifest" href="../manifest.webmanifest" />
+	<link rel="icon" href="../img/icon-192.png" />
+	<link rel="apple-touch-icon" href="../img/icon-192.png" />
+	<link href="../CSS/index.css" rel="stylesheet" />
+	<link href="../CSS/wallet.css" rel="stylesheet" />
+	<title>Cartera - Cuenta TR</title>
+</head>
+<body class="wallet-shell">
+	<main class="wallet-app">
+		<header class="wallet-topbar">
+			<div class="wallet-brand">
+				<div class="wallet-brand-badge" aria-hidden="true">
+					<img src="../img/TR Icono.png" alt="" />
+				</div>
+				<div class="wallet-title-wrap">
+					<h1 class="wallet-title">Cuenta TR</h1>
+					<p class="wallet-subtitle">Cartera principal</p>
+				</div>
+			</div>
+			<div class="wallet-top-actions" aria-label="Controles de la cuenta">
+				<button class="wallet-icon-button" type="button" aria-label="Seguridad">
+					<span class="material-symbols-outlined">shield</span>
+				</button>
+				<button class="wallet-icon-button" type="button" aria-label="Notificaciones">
+					<span class="material-symbols-outlined">notifications</span>
+				</button>
+			</div>
+		</header>
+
+		<section class="wallet-card balance-card" aria-labelledby="balance-title">
+			<p id="balance-title" class="balance-label">Saldo Total</p>
+			<div class="balance-amount-row" aria-label="Saldo disponible">
+				<h2 class="balance-amount">1,250.00</h2>
+				<span class="balance-currency">USDT</span>
+			</div>
+			<div class="balance-pill">
+				<span class="material-symbols-outlined" aria-hidden="true">verified_user</span>
+				<span>Cuenta Protegida</span>
+			</div>
+		</section>
+
+		<section class="quick-actions" aria-label="Acciones rápidas">
+			<button class="quick-action send" type="button">
+				<span class="quick-action-icon" aria-hidden="true">
+					<span class="material-symbols-outlined">send</span>
+				</span>
+				<span class="quick-action-label">Enviar<br />Remesa</span>
+			</button>
+
+			<button class="quick-action receive" type="button">
+				<span class="quick-action-icon" aria-hidden="true">
+					<span class="material-symbols-outlined">download</span>
+				</span>
+				<span class="quick-action-label">Recibir</span>
+			</button>
+
+			<button class="quick-action topup" type="button">
+				<span class="quick-action-icon" aria-hidden="true">
+					<span class="material-symbols-outlined">credit_card</span>
+				</span>
+				<span class="quick-action-label">Cargar<br />Saldo</span>
+			</button>
+		</section>
+
+		<section class="activity-header" aria-labelledby="recent-activity-title">
+			<h2 id="recent-activity-title" class="activity-title">Actividad Reciente</h2>
+			<a class="activity-link" href="#">Ver Todo</a>
+		</section>
+
+		<section class="activity-list" aria-label="Lista de movimientos recientes">
+			<article class="activity-item">
+				<div class="activity-avatar blue" aria-hidden="true">
+					<span class="material-symbols-outlined">person</span>
+				</div>
+				<div class="activity-main">
+					<h3 class="activity-name">Envío a Maria Gomez</h3>
+					<p class="activity-meta">Hoy, 10:45 AM · Remesa</p>
+				</div>
+				<div class="activity-right">
+					<p class="activity-amount negative">- 450.00 <span class="currency">USDT</span></p>
+					<span class="activity-status processing">Procesando</span>
+				</div>
+			</article>
+
+			<article class="activity-item">
+				<div class="activity-avatar" aria-hidden="true">
+					<span class="material-symbols-outlined">account_balance_wallet</span>
+				</div>
+				<div class="activity-main">
+					<h3 class="activity-name">Carga de Saldo</h3>
+					<p class="activity-meta">Ayer, 03:20 PM · Tarjeta ****4210</p>
+				</div>
+				<div class="activity-right">
+					<p class="activity-amount positive">+ 1,000.00 <span class="currency">USDT</span></p>
+					<span class="activity-status completed">Completado</span>
+				</div>
+			</article>
+
+			<article class="activity-item">
+				<div class="activity-avatar gold" aria-hidden="true">
+					<span class="material-symbols-outlined">currency_exchange</span>
+				</div>
+				<div class="activity-main">
+					<h3 class="activity-name">Intercambio Crypto</h3>
+					<p class="activity-meta">12 Oct · BTC a USDT</p>
+				</div>
+				<div class="activity-right">
+					<p class="activity-amount positive">+ 200.00 <span class="currency">USDT</span></p>
+					<span class="activity-status completed">Completado</span>
+				</div>
+			</article>
+		</section>
+	</main>
+
+	<nav class="bottom-nav" aria-label="Navegación principal">
+		<div class="bottom-nav-list">
+			<button class="bottom-nav-item active" type="button" aria-current="page">
+				<span class="material-symbols-outlined">account_balance_wallet</span>
+				<span class="bottom-nav-label">Wallet</span>
+			</button>
+			<button class="bottom-nav-item" type="button">
+				<span class="material-symbols-outlined">send</span>
+				<span class="bottom-nav-label">Send</span>
+			</button>
+			<button class="bottom-nav-item" type="button">
+				<span class="material-symbols-outlined">group</span>
+				<span class="bottom-nav-label">Aliados</span>
+			</button>
+			<button class="bottom-nav-item" type="button">
+				<span class="material-symbols-outlined">history</span>
+				<span class="bottom-nav-label">History</span>
+			</button>
+			<button class="bottom-nav-item" type="button">
+				<span class="material-symbols-outlined">person</span>
+				<span class="bottom-nav-label">Profile</span>
+			</button>
+		</div>
+	</nav>
+	<script src="../JS/pwa.js"></script>
+</body>
+</html>

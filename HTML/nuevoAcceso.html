@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#98d918" />
+    <meta name="application-name" content="Cuenta TR" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <link rel="icon" href="../img/icon-192.png" />
+    <link rel="apple-touch-icon" href="../img/icon-192.png" />
+    <link href="../CSS/index.css" rel="stylesheet" />
+    <link href="../CSS/claveNueva.css" rel="stylesheet" />
+    <title>Crear contraseña - Cuenta TR</title>
+</head>
+<body class="login-shell">
+    <main class="login-card">
+        <div class="brand-spot">
+            <img src="../img/TR Icono.png" alt="Logo Cuenta TR" />
+        </div>
+        <h1 class="title">Configura tu acceso</h1>
+        <p class="subtitle">Crea una contraseña segura y define tus preguntas de seguridad.</p>
+        <section class="step-progress" aria-label="Progreso del formulario">
+            <div class="step-progress-track" role="presentation">
+                <span id="step-progress-fill" class="step-progress-fill step-1"></span>
+            </div>
+            <div class="step-progress-labels" role="tablist" aria-label="Pasos de configuracion">
+                <button id="tab-step-1" class="step-chip is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-step-1">
+                    <span class="step-chip-number">1</span>
+                    <span class="step-chip-text">Creacion de clave</span>
+                </button>
+                <button id="tab-step-2" class="step-chip is-pending" type="button" role="tab" aria-selected="false" aria-controls="panel-step-2" disabled>
+                    <span class="step-chip-number">2</span>
+                    <span class="step-chip-text">Preguntas de seguridad</span>
+                </button>
+            </div>
+        </section>
+        <form id="setup-form" novalidate>
+            <section id="panel-step-1" class="form-section is-active" role="tabpanel" aria-labelledby="tab-step-1">
+                <div class="form-section-header">
+                    <p class="step-tag">Paso 1</p>
+                    <h2 id="step-1-title">Creacion de clave</h2>
+                </div>
+                <div class="form-group">
+                <div class="form-field">
+                    <label for="new-password">Contraseña</label>
+                    <div class="input-block input-with-toggle">
+                        <span class="material-symbols-outlined">lock</span>
+                        <input id="new-password" name="new-password" type="password" placeholder="Crea una contraseña" required minlength="8" />
+                        <button type="button" class="password-toggle" aria-label="Mostrar contraseña">
+                            <span class="material-symbols-outlined" id="new-password-toggle">visibility</span>
+                        </button>
+                    </div>
+                    <span class="field-error" id="new-password-error" aria-live="polite"></span>
+                </div>
+                <div class="form-field">
+                    <label for="confirm-password">Confirmar contraseña</label>
+                    <div class="input-block input-with-toggle">
+                        <span class="material-symbols-outlined">lock</span>
+                        <input id="confirm-password" name="confirm-password" type="password" placeholder="Repite la contraseña" required />
+                        <button type="button" class="password-toggle" aria-label="Mostrar contraseña">
+                            <span class="material-symbols-outlined" id="confirm-password-toggle">visibility</span>
+                        </button>
+                    </div>
+                    <span class="field-error" id="confirm-password-error" aria-live="polite"></span>
+                </div>
+                <div class="password-rules" role="note" aria-label="Requisitos de la contraseña">
+                    <p class="password-rules-title">La clave debe incluir:</p>
+                    <ul class="password-rules-list">
+                        <li>Minimo 8 caracteres.</li>
+                        <li>Al menos 1 letra mayuscula (A-Z).</li>
+                        <li>Al menos 1 letra minuscula (a-z).</li>
+                        <li>Al menos 1 numero (0-9).</li>
+                        <li>Al menos 1 caracter especial (por ejemplo: ! @ # $ % &amp; * ?).</li>
+                        <li>Sin espacios.</li>
+                    </ul>
+                </div>
+                </div>
+                <div class="action-group action-group-split">
+                    <button class="secondary-button" type="button" id="cancel-button">Cancelar</button>
+                    <button class="submit-button" type="button" id="continue-button">Continuar</button>
+                </div>
+            </section>
+
+            <section id="panel-step-2" class="form-section is-hidden" role="tabpanel" aria-labelledby="tab-step-2">
+                <div class="form-section-header">
+                    <p class="step-tag">Paso 2</p>
+                    <h2 id="step-2-title">Preguntas de seguridad</h2>
+                </div>
+                <div class="form-group">
+                <div class="form-field">
+                    <label for="security-question-1">Pregunta de seguridad 1</label>
+                    <div class="input-block">
+                        <span class="material-symbols-outlined">help</span>
+                        <input id="security-question-1" name="security-question-1" type="text" placeholder="Escribe tu primera pregunta" required />
+                    </div>
+                    <span class="field-error" id="security-question-1-error" aria-live="polite"></span>
+                </div>
+                <div class="form-field">
+                    <label for="security-answer-1">Respuesta 1</label>
+                    <div class="input-block">
+                        <span class="material-symbols-outlined">chat</span>
+                        <input id="security-answer-1" name="security-answer-1" type="text" placeholder="Escribe la respuesta" required />
+                    </div>
+                    <span class="field-error" id="security-answer-1-error" aria-live="polite"></span>
+                </div>
+                <div class="form-field">
+                    <label for="security-question-2">Pregunta de seguridad 2</label>
+                    <div class="input-block">
+                        <span class="material-symbols-outlined">help</span>
+                        <input id="security-question-2" name="security-question-2" type="text" placeholder="Escribe tu segunda pregunta" required />
+                    </div>
+                    <span class="field-error" id="security-question-2-error" aria-live="polite"></span>
+                </div>
+                <div class="form-field">
+                    <label for="security-answer-2">Respuesta 2</label>
+                    <div class="input-block">
+                        <span class="material-symbols-outlined">chat</span>
+                        <input id="security-answer-2" name="security-answer-2" type="text" placeholder="Escribe la respuesta" required />
+                    </div>
+                    <span class="field-error" id="security-answer-2-error" aria-live="polite"></span>
+                </div>
+                </div>
+                <div class="action-group action-group-split">
+                    <button class="secondary-button" type="button" id="back-button">Volver</button>
+                    <button class="submit-button" type="button" id="save-button">Guardar</button>
+                </div>
+            </section>
+            <div id="form-response" class="server-response" aria-live="polite"></div>
+        </form>
+    </main>
+    <div id="exit-confirm" class="confirm-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="exit-confirm-title">
+        <div class="confirm-panel">
+            <h2 id="exit-confirm-title">¿Deseas salir sin terminar?</h2>
+            <p class="confirm-text">Si sales ahora, no se guardará tu configuración actual. ¿Deseas continuar?</p>
+            <div class="confirm-actions">
+                <button id="confirm-exit" class="secondary-button" type="button">Sí</button>
+                <button id="cancel-exit" class="submit-button" type="button">No</button>
+            </div>
+        </div>
+    </div>
+    <div id="save-loading-overlay" class="save-loading-overlay hidden" aria-live="polite" aria-busy="true">
+        <div class="save-loading-panel">
+            <img class="save-loading-logo" src="../img/TR Icono.png" alt="Logo Cuenta TR" />
+            <p class="save-loading-title">Guardando configuracion</p>
+            <div class="save-loading-bar">
+                <div id="save-loading-progress" class="save-loading-progress" style="width: 0%"></div>
+            </div>
+            <p class="save-loading-text">Espera un momento mientras guardamos tu clave y preguntas de seguridad.</p>
+        </div>
+    </div>
+    <div id="backend-rejected-modal" class="backend-rejected-modal hidden" role="dialog" aria-modal="true" aria-labelledby="backend-rejected-title">
+        <div class="backend-rejected-panel">
+            <h2 id="backend-rejected-title">No se pudo completar el guardado</h2>
+            <p id="backend-rejected-reason" class="backend-rejected-reason">El backend rechazo la solicitud.</p>
+            <button id="backend-rejected-close" class="submit-button" type="button">Entendido</button>
+        </div>
+    </div>
+    <script src="../JS/login/nuevoAcceso/nuevoAccesoService.js"></script>
+    <script src="../JS/login/nuevoAcceso/nuevoAccesoController.js"></script>
+    <script src="../JS/login/nuevoAcceso/nuevoAccesoUI.js"></script>
+    <script src="../JS/pwa.js"></script>
+</body>
+</html>

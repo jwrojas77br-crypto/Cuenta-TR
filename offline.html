@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="CSS/index.css" rel="stylesheet" />
+  <title>Sin conexión - Cuenta TR</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+      background: radial-gradient(circle at top left, rgba(154, 217, 24, 0.2), transparent 35%), var(--background);
+      font-family: 'Manrope', sans-serif;
+    }
+
+    .offline-card {
+      width: min(100%, 420px);
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(194, 202, 175, 0.6);
+      border-radius: 2rem;
+      box-shadow: 0 24px 55px rgba(48, 67, 10, 0.12);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .offline-logo {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 1rem;
+    }
+
+    .offline-card h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .offline-card p {
+      margin: 0.85rem 0 0;
+      line-height: 1.7;
+      color: var(--on-surface-variant);
+    }
+  </style>
+</head>
+<body>
+  <main class="offline-card">
+    <img class="offline-logo" src="img/TR Icono.png" alt="Logo Cuenta TR" />
+    <h1>Sin conexión</h1>
+    <p>La aplicación sigue disponible, pero necesitas internet para cargar contenido nuevo. Intenta de nuevo en unos momentos.</p>
+  </main>
+</body>
+</html>
