@@ -22,6 +22,14 @@ const supportButton = document.querySelector('.support-button');
 
 let pendingRedirectUrl = '';
 
+if (sessionStorage.getItem('tr-authenticated') === '1') {
+    window.location.replace('../HTML/wallet.html');
+}
+
+function markAuthenticatedSession() {
+    sessionStorage.setItem('tr-authenticated', '1');
+}
+
 /**
  * Limpia todos los mensajes de error mostrados en los campos
  * Establece el contenido en vacío para que no aparezcan mensajes previos
@@ -221,11 +229,12 @@ async function validateSecurityCode() {
     }
 
     hideSecurityCodeModal();
+    markAuthenticatedSession();
     serverResponse.textContent = response.message || 'Código validado correctamente.';
     serverResponse.classList.remove('server-error');
 
     if (response.nextUrl) {
-        window.location.href = response.nextUrl;
+        window.location.replace(response.nextUrl);
     }
 }
 
@@ -251,7 +260,8 @@ if (newUserAck) {
         event.preventDefault();
 
         if (pendingRedirectUrl) {
-            window.location.href = pendingRedirectUrl;
+            markAuthenticatedSession();
+            window.location.replace(pendingRedirectUrl);
         }
     });
 }

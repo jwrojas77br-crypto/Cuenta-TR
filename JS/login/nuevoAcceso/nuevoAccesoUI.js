@@ -364,7 +364,8 @@ async function processStepTwoSave() {
 		formResponse.classList.remove('server-error');
 	}
 
-	window.location.href = '../HTML/wallet.html';
+	sessionStorage.setItem('tr-authenticated', '1');
+	window.location.replace('../HTML/wallet.html');
 
 	return true;
 }

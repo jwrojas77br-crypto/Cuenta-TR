@@ -24,5 +24,20 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "screenshots": [
+    {
+      "src": "img/screenshots/wallet-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Vista principal en escritorio"
+    },
+    {
+      "src": "img/screenshots/wallet-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "label": "Vista principal en movil"
+    }
   ]
 }
