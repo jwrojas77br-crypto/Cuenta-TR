@@ -99,31 +99,74 @@ window.validatePasswordSecurity = validatePasswordSecurity;
  * @returns {Promise<{success: boolean, status: 'success' | 'rejected', message: string, requestId: string}>}
  */
 async function sendNewAccessDataToBackend(payload) {
-	const normalizedPayload = {
-		newPassword: String(payload?.newPassword || '').trim(),
-		securityQuestion1: String(payload?.securityQuestion1 || '').trim(),
-		securityAnswer1: String(payload?.securityAnswer1 || '').trim(),
-		securityQuestion2: String(payload?.securityQuestion2 || '').trim(),
-		securityAnswer2: String(payload?.securityAnswer2 || '').trim()
+	const setupToken = sessionStorage.getItem(
+		'tr-new-access-token'
+	);
+
+	if (!setupToken) {
+		return {
+			success: false,
+			status: 'rejected',
+			message:
+				'El permiso de configuracion no existe o ha expirado.'
+		};
+	}
+
+	const endpoint = window.getApiEndpoint(
+		'/api/auth/new-access'
+	);
+
+	const requestBody = {
+		action: 'newAccess',
+		setupToken: setupToken,
+		newPassword:
+			String(payload?.newPassword || '').trim(),
+		securityQuestion1:
+			String(payload?.securityQuestion1 || '').trim(),
+		securityAnswer1:
+			String(payload?.securityAnswer1 || '').trim(),
+		securityQuestion2:
+			String(payload?.securityQuestion2 || '').trim(),
+		securityAnswer2:
+			String(payload?.securityAnswer2 || '').trim()
 	};
 
-	// TODO BACKEND-REAL: El requestId lo debe devolver el backend real.
-	const requestId = `NA-${Date.now()}`;
+	try {
+		const response = await fetch(endpoint, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			},
+			body: JSON.stringify(requestBody)
+		});
 
-	// TODO BACKEND-REAL: Eliminar latencia simulada y usar tiempos reales de la API.
-	const simulatedLatency = 7000 + Math.floor(Math.random() * 600);
+		const data = await response.json();
 
-	await new Promise((resolve) => {
-		setTimeout(resolve, simulatedLatency);
-	});
+		return {
+			success: Boolean(data?.ok || data?.success),
+			status: data?.status || (
+				response.ok ? 'success' : 'rejected'
+			),
+			message:
+				data?.message ||
+				'No se pudo guardar la configuracion.',
+			requestId: data?.requestId
+		};
+	} catch (error) {
+		console.error(
+			'Error comunicando con el backend:',
+			error
+		);
 
-	// TODO BACKEND-REAL: Este objeto es mock. Sustituir por parseo de respuesta exitosa real.
-	return {
-		success: true,
-		status: 'success',
-		message: 'Backend confirmo guardado exitoso de clave y preguntas de seguridad.',
-		requestId
-	};
+		return {
+			success: false,
+			status: 'rejected',
+			message:
+				'Error de comunicacion al guardar la configuracion.'
+		};
+	}
 }
 
-window.sendNewAccessDataToBackend = sendNewAccessDataToBackend;
+window.sendNewAccessDataToBackend =
+	sendNewAccessDataToBackend;

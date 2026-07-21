@@ -17,7 +17,7 @@ function redirectToLogin() {
 }
 
 function redirectLandingLoginWithReplace() {
-  const loginTrigger = document.querySelector('.primary-button[href$="HTML/login.html"]');
+  const loginTrigger = document.getElementById('landing-login-button');
 
   if (!loginTrigger) {
     return;

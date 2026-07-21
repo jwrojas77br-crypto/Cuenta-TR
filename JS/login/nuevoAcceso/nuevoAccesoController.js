@@ -34,13 +34,9 @@ function storeValidatedNewAccessData(payload) {
 	storedSecurityQuestion2 = normalizedPayload.securityQuestion2;
 	storedSecurityAnswer2 = normalizedPayload.securityAnswer2;
 
-	console.log('storeValidatedNewAccessData: valores guardados', {
-		newPassword: storedNewPassword,
-		securityQuestion1: storedSecurityQuestion1,
-		securityAnswer1: storedSecurityAnswer1,
-		securityQuestion2: storedSecurityQuestion2,
-		securityAnswer2: storedSecurityAnswer2
-	});
+	console.log(
+		'Datos de nuevo acceso validados correctamente.'
+	);
 
 	return {
 		success: true,

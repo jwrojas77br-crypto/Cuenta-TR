@@ -1,5 +1,6 @@
 // Variable para almacenar si el usuario autenticado es nuevo
 let currentUserIsNew = false;
+let currentUserEmail = "";
 
 /**
  * Extrae las credenciales almacenadas por storeCredentials() y las envía
@@ -26,6 +27,7 @@ async function authenticateLogin() {
     }
 
     currentUserIsNew = Boolean(response.isNewUser);
+    currentUserEmail = String(credentials.email || "").trim();
     console.log('authenticateLogin: usuario es nuevo:', currentUserIsNew);
 
     const codeDispatchResponse = await requestSecurityCodeForUser(credentials.email);
@@ -60,7 +62,7 @@ function storeCredentials() {
     };
 
     console.log('storeCredentials llamado:', credentials);
-    
+
     return credentials;
 }
 
@@ -106,7 +108,10 @@ async function validateSecurityCodeWithController(code) {
         };
     }
 
-    const response = await window.verifySecurityCodeWithService?.(normalizedCode);
+    const response = await window.verifySecurityCodeWithService?.(
+        normalizedCode,
+        currentUserEmail
+    );
 
     if (!response) {
         return {
@@ -115,7 +120,10 @@ async function validateSecurityCodeWithController(code) {
         };
     }
 
-    console.log('validateSecurityCodeWithController: respuesta del service:', response);
+    console.log(
+        'validateSecurityCodeWithController: codigo validado:',
+        Boolean(response?.success)
+    );
 
     if (!response.success) {
         return response;

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#98d918" />
+    <meta name="application-name" content="Cuenta TR" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <link rel="icon" href="../img/icon-192.png" />
+    <link rel="apple-touch-icon" href="../img/icon-192.png" />
+    <link href="../CSS/index.css" rel="stylesheet" />
+    <link href="../CSS/olvideClave.css" rel="stylesheet" />
+    <title>Olvidé clave - Cuenta TR</title>
+</head>
+
+<body class="recover-shell">
+    <main class="recover-card">
+        <header class="recover-header">
+            <div class="recover-logo">
+                <img src="../img/TR Icono.png" alt="Logo Cuenta TR" />
+            </div>
+            <h1 class="recover-title">Recuperar clave</h1>
+            <p class="recover-subtitle">Sigue el proceso completo para recuperar tu acceso de forma segura.</p>
+        </header>
+        <section class="step-progress" aria-label="Progreso del proceso de recuperación">
+            <div class="step-progress-track" role="presentation">
+                <span id="recover-step-progress-fill" class="step-progress-fill step-1"></span>
+            </div>
+            <div class="step-progress-labels" role="list" aria-label="Pasos del proceso">
+                <button class="step-chip is-active" type="button" id="recover-chip-1" disabled>
+                    <span class="step-chip-number">1</span>
+                    <span class="step-chip-text">Email</span>
+                </button>
+                <button class="step-chip" type="button" id="recover-chip-2" disabled>
+                    <span class="step-chip-number">2</span>
+                    <span class="step-chip-text">Envío</span>
+                </button>
+                <button class="step-chip" type="button" id="recover-chip-3" disabled>
+                    <span class="step-chip-number">3</span>
+                    <span class="step-chip-text">Código</span>
+                </button>
+                <button class="step-chip" type="button" id="recover-chip-4" disabled>
+                    <span class="step-chip-number">4</span>
+                    <span class="step-chip-text">Preguntas</span>
+                </button>
+                <button class="step-chip" type="button" id="recover-chip-5" disabled>
+                    <span class="step-chip-number">5</span>
+                    <span class="step-chip-text">Clave</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="step-email" class="recover-step is-active" aria-labelledby="step-email-label">
+            <p id="step-email-label" class="step-label">Paso 1 de 5</p>
+            <div class="form-field">
+                <label for="recover-email">Correo registrado</label>
+                <div class="input-block">
+                    <span class="material-symbols-outlined">mail</span>
+                    <input id="recover-email" type="email" placeholder="Ej. usuario@email.com" autocomplete="email" />
+                </div>
+            </div>
+            <div class="action-group">
+                <button id="validate-email-button" class="submit-button" type="button">Validar email</button>
+                <button class="secondary-button cancel-recovery-button" type="button">Cancelar y volver al
+                    login</button>
+            </div>
+            <p class="recover-hint">Si lo escribiste en login, se copiará automáticamente aquí.</p>
+        </section>
+
+        <section id="step-send-code" class="recover-step" aria-labelledby="step-send-code-label">
+            <p id="step-send-code-label" class="step-label">Paso 2 de 5</p>
+            <div class="form-field">
+                <label>Enviar código de verificación</label>
+                <p class="security-question">Tu email fue validado. Ahora enviaremos un código de 4 dígitos para
+                    continuar.</p>
+            </div>
+            <div class="action-group">
+                <button id="send-code-button" class="submit-button" type="button">Enviar código</button>
+                <button class="secondary-button cancel-recovery-button" type="button">Cancelar y volver al
+                    login</button>
+            </div>
+            <p class="recover-hint">
+                Si no recibes el código, revisa también la carpeta de spam.
+            </p>
+        </section>
+
+        <section id="step-code" class="recover-step" aria-labelledby="step-code-label">
+            <p id="step-code-label" class="step-label">Paso 3 de 5</p>
+            <div class="form-field">
+                <label for="recover-code-1">Código de verificación</label>
+                <div class="code-grid" role="group" aria-label="Código de 4 dígitos">
+                    <input id="recover-code-1" class="recover-code-input" type="text" inputmode="numeric" maxlength="1"
+                        aria-label="Dígito 1" />
+                    <input id="recover-code-2" class="recover-code-input" type="text" inputmode="numeric" maxlength="1"
+                        aria-label="Dígito 2" />
+                    <input id="recover-code-3" class="recover-code-input" type="text" inputmode="numeric" maxlength="1"
+                        aria-label="Dígito 3" />
+                    <input id="recover-code-4" class="recover-code-input" type="text" inputmode="numeric" maxlength="1"
+                        aria-label="Dígito 4" />
+                </div>
+            </div>
+            <div class="action-group">
+                <button id="verify-code-button" class="submit-button" type="button">Validar código</button>
+                <button class="secondary-button cancel-recovery-button" type="button">Cancelar y volver al
+                    login</button>
+            </div>
+            <p class="recover-hint">
+                Introduce el código recibido. Tiene una validez de 5 minutos.
+            </p>
+        </section>
+
+        <section id="step-questions" class="recover-step" aria-labelledby="step-questions-label">
+            <p id="step-questions-label" class="step-label">Paso 4 de 5</p>
+            <div class="form-field">
+                <label for="security-answer-1">Pregunta de seguridad 1</label>
+                <p id="security-question-1" class="security-question">Cargando pregunta...</p>
+                <div class="input-block">
+                    <span class="material-symbols-outlined">chat</span>
+                    <input id="security-answer-1" type="text" placeholder="Escribe tu respuesta" autocomplete="off" />
+                </div>
+            </div>
+            <div class="form-field">
+                <label for="security-answer-2">Pregunta de seguridad 2</label>
+                <p id="security-question-2" class="security-question">Cargando pregunta...</p>
+                <div class="input-block">
+                    <span class="material-symbols-outlined">chat</span>
+                    <input id="security-answer-2" type="text" placeholder="Escribe tu respuesta" autocomplete="off" />
+                </div>
+            </div>
+            <p id="step-questions-response" class="server-response step-inline-response" aria-live="polite"></p>
+            <div class="action-group">
+                <button id="verify-questions-button" class="submit-button" type="button">Validar preguntas</button>
+                <button class="secondary-button cancel-recovery-button" type="button">Cancelar y volver al
+                    login</button>
+            </div>
+            <p class="recover-hint">
+                Escribe las respuestas que configuraste anteriormente.
+            </p>
+        </section>
+
+        <section id="step-password" class="recover-step" aria-labelledby="step-password-label">
+            <p id="step-password-label" class="step-label">Paso 5 de 5</p>
+            <div class="form-field">
+                <label for="recover-password">Nueva clave</label>
+                <div class="input-block input-with-toggle">
+                    <span class="material-symbols-outlined">lock</span>
+                    <input id="recover-password" type="password" placeholder="Nueva clave segura"
+                        autocomplete="new-password" />
+                    <button id="toggle-recover-password" class="password-toggle" type="button"
+                        aria-label="Mostrar contraseña">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-field">
+                <label for="recover-password-confirm">Confirmar nueva clave</label>
+                <div class="input-block input-with-toggle">
+                    <span class="material-symbols-outlined">lock</span>
+                    <input id="recover-password-confirm" type="password" placeholder="Repite la nueva clave"
+                        autocomplete="new-password" />
+                    <button id="toggle-recover-password-confirm" class="password-toggle" type="button"
+                        aria-label="Mostrar contraseña">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                </div>
+            </div>
+            <p id="step-password-response" class="server-response step-inline-response" aria-live="polite"></p>
+            <div class="password-rules" role="note" aria-label="Requisitos de la contraseña">
+                <p class="password-rules-title">La clave debe incluir:</p>
+                <ul class="password-rules-list">
+                    <li>Mínimo 8 caracteres.</li>
+                    <li>Al menos 1 letra mayúscula (A-Z).</li>
+                    <li>Al menos 1 letra minúscula (a-z).</li>
+                    <li>Al menos 1 número (0-9).</li>
+                    <li>Al menos 1 caracter especial (por ejemplo: ! @ # $ % &amp; * ?).</li>
+                    <li>Sin espacios.</li>
+                </ul>
+            </div>
+            <div class="action-group">
+                <button id="save-password-button" class="submit-button" type="button">Guardar nueva clave</button>
+                <button id="back-login-button" class="secondary-button cancel-recovery-button" type="button">Cancelar y
+                    volver al login</button>
+            </div>
+        </section>
+
+        <p id="recover-response" class="server-response" aria-live="polite"></p>
+    </main>
+
+    <div id="cancel-recovery-modal" class="confirm-overlay hidden" role="dialog" aria-modal="true"
+        aria-labelledby="cancel-recovery-title">
+        <div class="confirm-panel">
+            <h2 id="cancel-recovery-title">¿Deseas salir del proceso?</h2>
+            <p class="confirm-text">Si sales ahora, perderás todo el proceso de recuperación de clave. ¿Quieres
+                continuar?</p>
+            <div class="confirm-actions">
+                <button id="confirm-cancel-recovery" class="secondary-button" type="button">Sí, salir</button>
+                <button id="close-cancel-recovery" class="submit-button" type="button">No, continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../JS/config/appConfig.js"></script>
+    <script src="../JS/login/olvideClave/olvideClaveService.js"></script>
+    <script src="../JS/login/olvideClave/olvideClaveController.js"></script>
+    <script src="../JS/login/olvideClave/olvideClaveUI.js"></script>
+    <script src="../JS/pwa.js"></script>
+</body>
+
+</html>

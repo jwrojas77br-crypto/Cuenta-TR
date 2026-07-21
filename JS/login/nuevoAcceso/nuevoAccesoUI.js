@@ -364,6 +364,7 @@ async function processStepTwoSave() {
 		formResponse.classList.remove('server-error');
 	}
 
+	sessionStorage.removeItem('tr-new-access-token');
 	sessionStorage.setItem('tr-authenticated', '1');
 	window.location.replace('../HTML/wallet.html');
 

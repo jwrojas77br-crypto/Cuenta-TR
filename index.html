@@ -48,6 +48,10 @@
             color: var(--on-surface-variant);
             line-height: 1.7;
         }
+        .landing-actions {
+            display: grid;
+            gap: 0.75rem;
+        }
     </style>
 </head>
 <body>
@@ -58,9 +62,12 @@
                 <h1>Cuenta TR</h1>
                 <p>Accede a tu área segura de forma rápida y confiable.</p>
             </div>
-            <a class="primary-button" href="HTML/login.html">Ir al login</a>
+            <div class="landing-actions">
+                <button class="primary-button" type="button" id="landing-login-button">Ir al login</button>
+            </div>
         </section>
     </main>
+    <script src="JS/config/appConfig.js"></script>
     <script src="JS/pwa.js"></script>
 </body>
 </html>

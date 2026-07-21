@@ -19,6 +19,8 @@ const codeField = document.querySelector('.code-field');
 const codeHelp = document.querySelector('.code-help');
 const codeModalText = document.querySelector('.modal-text');
 const supportButton = document.querySelector('.support-button');
+const forgotLink = document.querySelector('.forgot-link');
+const RECOVERY_EMAIL_DRAFT_KEY = 'tr-recovery-email-draft';
 
 let pendingRedirectUrl = '';
 
@@ -224,6 +226,20 @@ async function validateSecurityCode() {
     }
 
     if (response.isNewUser) {
+        if (!response.setupToken) {
+            if (codeError) {
+                codeError.textContent =
+                    'No se recibió el permiso para configurar el acceso.';
+            }
+
+            return;
+        }
+
+        sessionStorage.setItem(
+            'tr-new-access-token',
+            response.setupToken
+        );
+
         showNewUserRedirectNotice(response.nextUrl);
         return;
     }
@@ -260,7 +276,6 @@ if (newUserAck) {
         event.preventDefault();
 
         if (pendingRedirectUrl) {
-            markAuthenticatedSession();
             window.location.replace(pendingRedirectUrl);
         }
     });
@@ -425,6 +440,19 @@ if (supportButton) {
         if (!popup) {
             window.location.href = whatsappUrl;
         }
+    });
+}
+
+if (forgotLink) {
+    forgotLink.addEventListener('click', () => {
+        const emailDraft = String(emailInput?.value || '').trim().toLowerCase();
+
+        if (!emailDraft) {
+            sessionStorage.removeItem(RECOVERY_EMAIL_DRAFT_KEY);
+            return;
+        }
+
+        sessionStorage.setItem(RECOVERY_EMAIL_DRAFT_KEY, emailDraft);
     });
 }
 

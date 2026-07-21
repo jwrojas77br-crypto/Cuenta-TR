@@ -371,6 +371,15 @@
     cursor: pointer;
     text-decoration: underline;
 }
+.forgot-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: var(--secondary);
+    font-weight: 700;
+    text-decoration: underline;
+}
 .trust-badge {
     margin-top: 2rem;
     display: inline-flex;
