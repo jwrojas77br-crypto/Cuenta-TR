@@ -97,10 +97,15 @@ async function sendSecurityCodeEmail(email) {
 
         const data = await response.json();
         const normalizedResponse = {
-            success: Boolean(data?.ok || data?.success),
-            message: data?.message || ((data?.ok || data?.success)
-                ? 'Codigo enviado al correo.'
-                : 'No se pudo enviar el codigo.')
+            success: Boolean(
+                data?.ok || data?.success
+            ),
+
+            message:
+                data?.message ||
+                ((data?.ok || data?.success)
+                    ? 'Codigo enviado al correo.'
+                    : 'No se pudo enviar el codigo.')
         };
 
         console.log('[Send Code] HTTP status:', response.status);
@@ -144,11 +149,24 @@ async function verifySecurityCodeWithService(code, email) {
 
         const data = await response.json();
         const normalizedResponse = {
-            success: Boolean(data?.ok || data?.success),
-            message: data?.message || ((data?.ok || data?.success)
-                ? 'Codigo validado correctamente.'
-                : 'Codigo incorrecto o expirado.'),
-            setupToken: String(data?.setupToken || '')
+            success: Boolean(
+                data?.ok || data?.success
+            ),
+
+            message:
+                data?.message ||
+                ((data?.ok || data?.success)
+                    ? 'Codigo validado correctamente.'
+                    : 'Codigo incorrecto o expirado.'),
+
+            isNewUser:
+                Boolean(data?.isNewUser),
+
+            setupToken:
+                String(data?.setupToken || ''),
+
+            authToken:
+                String(data?.authToken || '')
         };
 
         console.log('[Validate Code] HTTP status:', response.status);

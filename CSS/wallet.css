@@ -18,6 +18,11 @@
 }
 
 html {
+    min-height: 100%;
+    background: #e8ecdf;
+}
+
+html {
     scroll-behavior: smooth;
 }
 
@@ -477,23 +482,311 @@ a {
     }
 }
 
+
 @media (min-width: 768px) {
     body.wallet-shell {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 2rem;
+        width: 460px;
+        min-height: 100vh;
+        margin: 0 auto;
+        overflow-x: hidden;
+        box-shadow:
+            0 0 50px rgba(31, 45, 18, 0.18);
     }
 
     .wallet-app {
-        width: min(100%, 460px);
+        width: 100%;
         max-width: 460px;
-        min-height: calc(100vh - 4rem);
-        margin: 0 auto;
-        border-radius: 2rem;
+        min-height: 100vh;
+        margin: 0;
+        padding:
+            1.2rem 1rem 7rem;
     }
 
     .bottom-nav {
-        width: min(100%, 460px);
+        width: 460px;
+        max-width: 100%;
+    }
+}
+
+.wallet-response {
+    min-height: 20px;
+    margin: 12px 0 0;
+    color: #526044;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.wallet-response-error {
+    color: #c62828;
+}
+
+.wallet-empty-activity {
+    width: 100%;
+    margin: 20px 0;
+    color: #687260;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.transfer-modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: min(100%, 460px);
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 25, 18, 0.65);
+}
+
+.transfer-modal.hidden {
+    display: none;
+}
+
+.transfer-panel {
+    position: relative;
+    width: min(100%, 430px);
+    padding: 28px;
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+}
+
+.transfer-close-button {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    border: 0;
+    background: transparent;
+    color: #35402f;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.transfer-title {
+    margin: 0;
+    color: #172015;
+    font-size: 1.5rem;
+}
+
+.transfer-subtitle {
+    margin: 8px 0 22px;
+    color: #687260;
+    font-size: 0.9rem;
+}
+
+.transfer-field {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.transfer-field label {
+    color: #2f392a;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.transfer-field input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid #cdd5c8;
+    border-radius: 12px;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.transfer-field input:focus {
+    border-color: #84d900;
+    outline: 3px solid rgba(132, 217, 0, 0.18);
+}
+
+.transfer-amount-input {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.transfer-amount-input span {
+    color: #526044;
+    font-weight: 800;
+}
+
+.transfer-field-error {
+    min-height: 18px;
+    color: #c62828;
+    font-size: 0.8rem;
+}
+
+.transfer-response {
+    min-height: 20px;
+    margin: 4px 0 16px;
+    color: #526044;
+    font-size: 0.85rem;
+}
+
+.transfer-response.error {
+    color: #c62828;
+}
+
+.transfer-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.transfer-actions button {
+    width: 100%;
+    min-height: 56px;
+    padding: 0.9rem 1.2rem;
+    border-radius: 18px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
+}
+
+.transfer-actions button:disabled,
+.transfer-close-button:disabled,
+.transfer-field input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.transfer-actions .submit-button {
+    border: none;
+    background:
+        linear-gradient(180deg,
+            var(--wallet-primary),
+            #82c900);
+    color: #ffffff;
+    box-shadow:
+        0 12px 25px rgba(106, 154, 18, 0.25);
+}
+
+.transfer-actions .secondary-button {
+    border: 1px solid rgba(74, 105, 0, 0.25);
+    background: rgba(154, 223, 24, 0.1);
+    color: var(--wallet-primary-deep);
+}
+
+.transfer-actions button:active {
+    transform: scale(0.97);
+}
+
+.transfer-actions button:hover {
+    filter: brightness(1.04);
+}
+
+.transfer-actions button:focus-visible {
+    outline: 3px solid rgba(154, 223, 24, 0.35);
+    outline-offset: 2px;
+}
+
+.transfer-field input {
+    min-height: 56px;
+    font-size: 1rem;
+}
+
+.transfer-close-button {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+}
+
+.transfer-close-button:active {
+    background:
+        rgba(154, 223, 24, 0.15);
+}
+
+@media (max-width: 480px) {
+    .transfer-modal {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .transfer-panel {
+        width: 100%;
+        max-height: 92vh;
+        overflow-y: auto;
+        padding:
+            30px 20px calc(24px + env(safe-area-inset-bottom));
+        border-radius: 28px 28px 0 0;
+    }
+
+    .transfer-title {
+        padding-right: 42px;
+        font-size: 1.55rem;
+    }
+
+    .transfer-subtitle {
+        margin-bottom: 24px;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .transfer-actions {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .transfer-actions .submit-button {
+        order: 1;
+    }
+
+    .transfer-actions .secondary-button {
+        order: 2;
+    }
+
+    .transfer-modal:not(.hidden) {
+        animation:
+            transferBackdropIn 0.25s ease-out;
+    }
+
+    .transfer-modal:not(.hidden) .transfer-panel {
+        animation:
+            transferPanelIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+}
+
+@keyframes transferPanelIn {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes transferBackdropIn {
+    from {
+        background:
+            rgba(15, 25, 18, 0);
+    }
+
+    to {
+        background:
+            rgba(15, 25, 18, 0.65);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .transfer-modal:not(.hidden),
+    .transfer-modal:not(.hidden) .transfer-panel {
+        animation: none;
     }
 }

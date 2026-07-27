@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,8 +8,10 @@
 	<meta name="application-name" content="Cuenta TR" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap"
+		rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+		rel="stylesheet" />
 	<link rel="manifest" href="../manifest.webmanifest" />
 	<link rel="icon" href="../img/icon-192.png" />
 	<link rel="apple-touch-icon" href="../img/icon-192.png" />
@@ -16,6 +19,7 @@
 	<link href="../CSS/wallet.css" rel="stylesheet" />
 	<title>Cartera - Cuenta TR</title>
 </head>
+
 <body class="wallet-shell">
 	<main class="wallet-app">
 		<header class="wallet-topbar">
@@ -24,8 +28,13 @@
 					<img src="../img/TR Icono.png" alt="" />
 				</div>
 				<div class="wallet-title-wrap">
-					<h1 class="wallet-title">Cuenta TR</h1>
-					<p class="wallet-subtitle">Cartera principal</p>
+					<h1 id="wallet-user-name" class="wallet-title">
+						Cargando...
+					</h1>
+
+					<p class="wallet-subtitle">
+						Cartera TR
+					</p>
 				</div>
 			</div>
 			<div class="wallet-top-actions" aria-label="Controles de la cuenta">
@@ -41,17 +50,24 @@
 		<section class="wallet-card balance-card" aria-labelledby="balance-title">
 			<p id="balance-title" class="balance-label">Saldo Total</p>
 			<div class="balance-amount-row" aria-label="Saldo disponible">
-				<h2 class="balance-amount">1,250.00</h2>
-				<span class="balance-currency">USDT</span>
+				<h2 id="wallet-balance" class="balance-amount">
+					--.--
+				</h2>
+
+				<span id="wallet-currency" class="balance-currency">
+					---
+				</span>
 			</div>
 			<div class="balance-pill">
 				<span class="material-symbols-outlined" aria-hidden="true">verified_user</span>
 				<span>Cuenta Protegida</span>
 			</div>
+
+			<p id="wallet-response" class="wallet-response" aria-live="polite"></p>
 		</section>
 
 		<section class="quick-actions" aria-label="Acciones rápidas">
-			<button class="quick-action send" type="button">
+			<button id="open-transfer-button" class="quick-action send" type="button">
 				<span class="quick-action-icon" aria-hidden="true">
 					<span class="material-symbols-outlined">send</span>
 				</span>
@@ -78,50 +94,66 @@
 			<a class="activity-link" href="#">Ver Todo</a>
 		</section>
 
-		<section class="activity-list" aria-label="Lista de movimientos recientes">
-			<article class="activity-item">
-				<div class="activity-avatar blue" aria-hidden="true">
-					<span class="material-symbols-outlined">person</span>
-				</div>
-				<div class="activity-main">
-					<h3 class="activity-name">Envío a Maria Gomez</h3>
-					<p class="activity-meta">Hoy, 10:45 AM · Remesa</p>
-				</div>
-				<div class="activity-right">
-					<p class="activity-amount negative">- 450.00 <span class="currency">USDT</span></p>
-					<span class="activity-status processing">Procesando</span>
-				</div>
-			</article>
-
-			<article class="activity-item">
-				<div class="activity-avatar" aria-hidden="true">
-					<span class="material-symbols-outlined">account_balance_wallet</span>
-				</div>
-				<div class="activity-main">
-					<h3 class="activity-name">Carga de Saldo</h3>
-					<p class="activity-meta">Ayer, 03:20 PM · Tarjeta ****4210</p>
-				</div>
-				<div class="activity-right">
-					<p class="activity-amount positive">+ 1,000.00 <span class="currency">USDT</span></p>
-					<span class="activity-status completed">Completado</span>
-				</div>
-			</article>
-
-			<article class="activity-item">
-				<div class="activity-avatar gold" aria-hidden="true">
-					<span class="material-symbols-outlined">currency_exchange</span>
-				</div>
-				<div class="activity-main">
-					<h3 class="activity-name">Intercambio Crypto</h3>
-					<p class="activity-meta">12 Oct · BTC a USDT</p>
-				</div>
-				<div class="activity-right">
-					<p class="activity-amount positive">+ 200.00 <span class="currency">USDT</span></p>
-					<span class="activity-status completed">Completado</span>
-				</div>
-			</article>
+		<section id="wallet-activity-list" class="activity-list" aria-label="Lista de movimientos recientes">
+			<p class="wallet-empty-activity">
+				Cargando movimientos...
+			</p>
 		</section>
 	</main>
+
+	<div id="transfer-modal" class="transfer-modal hidden" role="dialog" aria-modal="true"
+		aria-labelledby="transfer-modal-title">
+		<div class="transfer-panel">
+			<button id="close-transfer-button" class="transfer-close-button" type="button"
+				aria-label="Cerrar formulario">
+				×
+			</button>
+
+			<h2 id="transfer-modal-title" class="transfer-title">
+				Enviar fondos
+			</h2>
+
+			<p class="transfer-subtitle">
+				Envía USDT a otro usuario de Cuenta TR.
+			</p>
+
+			<div class="transfer-field">
+				<label for="transfer-email">
+					Correo del destinatario
+				</label>
+
+				<input id="transfer-email" type="email" placeholder="usuario@email.com" autocomplete="email" />
+
+				<span id="transfer-email-error" class="transfer-field-error"></span>
+			</div>
+
+			<div class="transfer-field">
+				<label for="transfer-amount">
+					Monto
+				</label>
+
+				<div class="transfer-amount-input">
+					<input id="transfer-amount" type="text" placeholder="0,00" inputmode="numeric" autocomplete="off" />
+
+					<span>USDT</span>
+				</div>
+
+				<span id="transfer-amount-error" class="transfer-field-error"></span>
+			</div>
+
+			<p id="transfer-response" class="transfer-response" aria-live="polite"></p>
+
+			<div class="transfer-actions">
+				<button id="cancel-transfer-button" class="secondary-button" type="button">
+					Cancelar
+				</button>
+
+				<button id="confirm-transfer-button" class="submit-button" type="button">
+					Enviar
+				</button>
+			</div>
+		</div>
+	</div>
 
 	<nav class="bottom-nav" aria-label="Navegación principal">
 		<div class="bottom-nav-list">
@@ -147,6 +179,11 @@
 			</button>
 		</div>
 	</nav>
+	<script src="../JS/config/appConfig.js"></script>
+	<script src="../JS/wallet/walletService.js"></script>
+	<script src="../JS/wallet/walletController.js"></script>
+	<script src="../JS/wallet/walletUI.js"></script>
 	<script src="../JS/pwa.js"></script>
 </body>
+
 </html>

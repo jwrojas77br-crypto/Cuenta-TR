@@ -1,4 +1,18 @@
 const AUTH_SESSION_KEY = 'tr-authenticated';
+const LOCAL_DEVELOPMENT_HOSTS = [
+  'localhost',
+  '127.0.0.1',
+  '[::1]'
+];
+
+const isLocalDevelopment =
+  LOCAL_DEVELOPMENT_HOSTS.includes(
+    window.location.hostname
+  );
+
+const shouldEnforceAuthentication =
+  !isLocalDevelopment;
+
 const isAuthenticated = sessionStorage.getItem(AUTH_SESSION_KEY) === '1';
 const isLoginShell = document.body.classList.contains('login-shell');
 const isWalletShell = document.body.classList.contains('wallet-shell');
@@ -29,12 +43,28 @@ function redirectLandingLoginWithReplace() {
   });
 }
 
-if (isLoginShell && isAuthenticated) {
+if (
+  shouldEnforceAuthentication &&
+  isLoginShell &&
+  isAuthenticated
+) {
   redirectToWallet();
 }
 
-if (isWalletShell && !isAuthenticated) {
+if (
+  shouldEnforceAuthentication &&
+  isWalletShell &&
+  !isAuthenticated
+) {
   redirectToLogin();
+}
+
+if (
+  shouldEnforceAuthentication &&
+  isLandingShell &&
+  isAuthenticated
+) {
+  redirectToWallet();
 }
 
 if (isLandingShell && isAuthenticated) {
@@ -44,15 +74,27 @@ if (isLandingShell && isAuthenticated) {
 window.addEventListener('pageshow', () => {
   const sessionIsValid = sessionStorage.getItem(AUTH_SESSION_KEY) === '1';
 
-  if (isLoginShell && sessionIsValid) {
+  if (
+    shouldEnforceAuthentication &&
+    isLoginShell &&
+    sessionIsValid
+  ) {
     redirectToWallet();
   }
 
-  if (isWalletShell && !sessionIsValid) {
+  if (
+    shouldEnforceAuthentication &&
+    isWalletShell &&
+    !sessionIsValid
+  ) {
     redirectToLogin();
   }
 
-  if (isLandingShell && sessionIsValid) {
+  if (
+    shouldEnforceAuthentication &&
+    isLandingShell &&
+    sessionIsValid
+  ) {
     redirectToWallet();
   }
 });
@@ -64,11 +106,19 @@ window.addEventListener('load', () => {
     redirectLandingLoginWithReplace();
   }
 
-  if (isLoginShell && sessionIsValid) {
+  if (
+    shouldEnforceAuthentication &&
+    isLoginShell &&
+    sessionIsValid
+  ) {
     redirectToWallet();
   }
 
-  if (isWalletShell && !sessionIsValid) {
+  if (
+    shouldEnforceAuthentication &&
+    isWalletShell &&
+    !sessionIsValid
+  ) {
     redirectToLogin();
   }
 });

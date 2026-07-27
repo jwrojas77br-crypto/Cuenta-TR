@@ -129,6 +129,9 @@ async function validateSecurityCodeWithController(code) {
         return response;
     }
 
+    currentUserIsNew =
+    Boolean(response.isNewUser);
+    
     const nextUrl = currentUserIsNew ? '../HTML/nuevoAcceso.html' : '../HTML/wallet.html';
 
     console.log('validateSecurityCodeWithController: código validado. Usuario es nuevo:', currentUserIsNew);

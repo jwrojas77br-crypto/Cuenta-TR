@@ -151,7 +151,9 @@ async function sendNewAccessDataToBackend(payload) {
 			message:
 				data?.message ||
 				'No se pudo guardar la configuracion.',
-			requestId: data?.requestId
+			requestId: data?.requestId,
+			authToken:
+				String(data?.authToken || '')
 		};
 	} catch (error) {
 		console.error(

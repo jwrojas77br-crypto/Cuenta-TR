@@ -244,6 +244,20 @@ async function validateSecurityCode() {
         return;
     }
 
+    if (!response.authToken) {
+        if (codeError) {
+            codeError.textContent =
+                'No se recibio una sesion valida.';
+        }
+
+        return;
+    }
+
+    sessionStorage.setItem(
+        'tr-auth-token',
+        response.authToken
+    );
+
     hideSecurityCodeModal();
     markAuthenticatedSession();
     serverResponse.textContent = response.message || 'Código validado correctamente.';

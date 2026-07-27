@@ -364,6 +364,24 @@ async function processStepTwoSave() {
 		formResponse.classList.remove('server-error');
 	}
 
+	if (!saveResponse.authToken) {
+		if (formResponse) {
+			formResponse.textContent =
+				'No se recibio una sesion valida.';
+
+			formResponse.classList.add(
+				'server-error'
+			);
+		}
+
+		return false;
+	}
+
+	sessionStorage.setItem(
+		'tr-auth-token',
+		saveResponse.authToken
+	);
+	
 	sessionStorage.removeItem('tr-new-access-token');
 	sessionStorage.setItem('tr-authenticated', '1');
 	window.location.replace('../HTML/wallet.html');

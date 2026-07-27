@@ -2,7 +2,7 @@ const IS_DEV =
   self.location.hostname === '127.0.0.1' ||
   self.location.hostname === 'localhost';
 
-const CACHE_VERSION = 'cuenta-tr-v3';
+const CACHE_VERSION = 'cuenta-tr-v4';
 const APP_SHELL_CACHE = `app-shell-${CACHE_VERSION}`;
 const OFFLINE_URL = './offline.html';
 
@@ -30,17 +30,21 @@ const APP_SHELL_ASSETS = [
   './JS/login/nuevoAcceso/nuevoAccesoController.js',
   './JS/login/nuevoAcceso/nuevoAccesoUI.js',
 
+  './JS/wallet/walletService.js',
+  './JS/wallet/walletController.js',
+  './JS/wallet/walletUI.js',
+
   './HTML/olvideClave.html',
   './CSS/olvideClave.css',
   './JS/config/appConfig.js',
   './JS/login/olvideClave/olvideClaveService.js',
   './JS/login/olvideClave/olvideClaveController.js',
   './JS/login/olvideClave/olvideClaveUI.js',
-  
+
   './img/TR Icono.png',
   './img/icon-192.png',
   './img/icon-512.png',
-  './img/icon-maskable-512.png'
+  './img/icon-maskable-512.png',
 ];
 
 self.addEventListener('install', (event) => {
