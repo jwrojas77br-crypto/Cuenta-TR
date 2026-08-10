@@ -22,6 +22,16 @@ const supportButton = document.querySelector('.support-button');
 const forgotLink = document.querySelector('.forgot-link');
 const RECOVERY_EMAIL_DRAFT_KEY = 'tr-recovery-email-draft';
 
+const passkeyLoginButton =
+    document.getElementById(
+        'passkey-login-button'
+    );
+
+const passkeyLoginResponse =
+    document.getElementById(
+        'passkey-login-response'
+    );
+
 let pendingRedirectUrl = '';
 
 if (sessionStorage.getItem('tr-authenticated') === '1') {
@@ -270,6 +280,70 @@ async function validateSecurityCode() {
 
 window.showSecurityCodeModal = showSecurityCodeModal;
 window.hideSecurityCodeModal = hideSecurityCodeModal;
+
+async function handlePasskeyLogin() {
+    if (!passkeyLoginButton) {
+        return;
+    }
+
+    passkeyLoginButton.disabled =
+        true;
+
+    passkeyLoginButton.textContent =
+        'Verificando dispositivo...';
+
+    passkeyLoginResponse.textContent =
+        'Confirma tu identidad en el teléfono.';
+
+    passkeyLoginResponse.classList.remove(
+        'error'
+    );
+
+    const result =
+        await window
+            .authenticateWithPasskey?.();
+
+    if (
+        !result?.success ||
+        !result.authToken
+    ) {
+        passkeyLoginResponse.textContent =
+            result?.message ||
+            'No se pudo iniciar sesión.';
+
+        passkeyLoginResponse.classList.add(
+            'error'
+        );
+
+        passkeyLoginButton.disabled =
+            false;
+
+        passkeyLoginButton.textContent =
+            'Ingresar con huella o PIN';
+
+        return;
+    }
+
+    sessionStorage.setItem(
+        'tr-auth-token',
+        result.authToken
+    );
+
+    markAuthenticatedSession();
+
+    passkeyLoginResponse.textContent =
+        result.message;
+
+    window.location.replace(
+        '../HTML/wallet.html'
+    );
+}
+
+passkeyLoginButton
+    ?.addEventListener(
+        'click',
+        handlePasskeyLogin
+    );
 
 if (codeModalClose) {
     codeModalClose.addEventListener('click', (event) => {

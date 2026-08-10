@@ -5,7 +5,7 @@ function browserSupportsPasskeys() {
         typeof window
             .SimpleWebAuthnBrowser
             .startRegistration ===
-            'function'
+        'function'
     );
 }
 
@@ -175,6 +175,112 @@ async function activatePasskeyForCurrentUser() {
     }
 }
 
+async function authenticateWithPasskey() {
+    if (!browserSupportsPasskeys()) {
+        return {
+            success: false,
+            message:
+                'Este dispositivo no permite usar huella, rostro o PIN.'
+        };
+    }
+
+    try {
+        const optionsResult =
+            await requestPasskeyJson(
+                '/api/passkeys/login/options',
+                {}
+            );
+
+        if (
+            !optionsResult.httpOk ||
+            !optionsResult.data?.success
+        ) {
+            return {
+                success: false,
+                message:
+                    optionsResult.data?.message ||
+                    'No se pudo iniciar el acceso rápido.'
+            };
+        }
+
+        const authenticationResponse =
+            await window
+                .SimpleWebAuthnBrowser
+                .startAuthentication({
+                    optionsJSON:
+                        optionsResult
+                            .data
+                            .options
+                });
+
+        const verificationResult =
+            await requestPasskeyJson(
+                '/api/passkeys/login/verify',
+                {
+                    flowId:
+                        optionsResult
+                            .data
+                            .flowId,
+
+                    credential:
+                        authenticationResponse
+                }
+            );
+
+        return {
+            success:
+                Boolean(
+                    verificationResult
+                        .httpOk &&
+                    verificationResult
+                        .data
+                        ?.success
+                ),
+
+            message:
+                verificationResult
+                    .data
+                    ?.message ||
+                'No se pudo verificar el acceso rápido.',
+
+            authToken:
+                verificationResult
+                    .data
+                    ?.authToken,
+
+            user:
+                verificationResult
+                    .data
+                    ?.user
+        };
+
+    } catch (error) {
+        console.error(
+            'Error iniciando con passkey:',
+            error
+        );
+
+        if (
+            error?.name ===
+            'NotAllowedError'
+        ) {
+            return {
+                success: false,
+                message:
+                    'El acceso fue cancelado o tardó demasiado.'
+            };
+        }
+
+        return {
+            success: false,
+            message:
+                'No se pudo ingresar con la passkey.'
+        };
+    }
+}
+
+window.authenticateWithPasskey =
+    authenticateWithPasskey;
 
 window.browserSupportsPasskeys =
     browserSupportsPasskeys;

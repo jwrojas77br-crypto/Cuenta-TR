@@ -177,6 +177,52 @@
     cursor: not-allowed;
     pointer-events: none;
 }
+
+.passkey-login-button {
+    width: 100%;
+    min-height: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 1rem 1.1rem;
+    border:
+        1px solid
+        rgba(70, 104, 0, 0.25);
+    border-radius: 1.5rem;
+    background:
+        rgba(152, 217, 24, 0.12);
+    color: var(--primary-dark);
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.passkey-login-button
+.material-symbols-outlined {
+    font-size: 27px;
+}
+
+.passkey-login-button:active {
+    transform: scale(0.98);
+}
+
+.passkey-login-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.passkey-login-response {
+    min-height: 18px;
+    margin: -6px 0 0;
+    color: var(--on-surface-variant);
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+.passkey-login-response.error {
+    color: #c62828;
+}
+
 .loading-overlay {
     position: fixed;
     inset: 0;
