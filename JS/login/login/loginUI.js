@@ -307,6 +307,19 @@ async function handlePasskeyLogin() {
         !result?.success ||
         !result.authToken
     ) {
+        const invalidStoredPasskey =
+            String(
+                result?.message || ''
+            ).includes(
+                'No se encontró una passkey válida'
+            );
+
+        if (invalidStoredPasskey) {
+            localStorage.removeItem(
+                'tr-passkey-enabled'
+            );
+        }
+
         passkeyLoginResponse.textContent =
             result?.message ||
             'No se pudo iniciar sesión.';
