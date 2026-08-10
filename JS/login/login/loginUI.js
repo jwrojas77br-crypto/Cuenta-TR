@@ -329,6 +329,11 @@ async function handlePasskeyLogin() {
         result.authToken
     );
 
+    localStorage.setItem(
+        'tr-passkey-enabled',
+        '1'
+    );
+
     markAuthenticatedSession();
 
     passkeyLoginResponse.textContent =
@@ -339,11 +344,59 @@ async function handlePasskeyLogin() {
     );
 }
 
+async function tryAutomaticPasskeyLogin() {
+    const passkeyWasEnabled =
+        localStorage.getItem(
+            'tr-passkey-enabled'
+        ) === '1';
+
+    const alreadyAuthenticated =
+        sessionStorage.getItem(
+            'tr-authenticated'
+        ) === '1';
+
+    const alreadyAttempted =
+        sessionStorage.getItem(
+            'tr-passkey-auto-attempted'
+        ) === '1';
+
+    const deviceSupportsPasskeys =
+        window
+            .browserSupportsPasskeys
+            ?.();
+
+    if (
+        !passkeyWasEnabled ||
+        alreadyAuthenticated ||
+        alreadyAttempted ||
+        !deviceSupportsPasskeys
+    ) {
+        return;
+    }
+
+    sessionStorage.setItem(
+        'tr-passkey-auto-attempted',
+        '1'
+    );
+
+    await handlePasskeyLogin();
+}
+
 passkeyLoginButton
     ?.addEventListener(
         'click',
         handlePasskeyLogin
     );
+
+window.addEventListener(
+    'load',
+    function () {
+        setTimeout(
+            tryAutomaticPasskeyLogin,
+            300
+        );
+    }
+);
 
 if (codeModalClose) {
     codeModalClose.addEventListener('click', (event) => {

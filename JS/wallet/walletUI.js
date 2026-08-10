@@ -341,6 +341,11 @@ async function handleActivatePasskey() {
         return;
     }
 
+    localStorage.setItem(
+        'tr-passkey-enabled',
+        '1'
+    );
+
     passkeySetupResponse.textContent =
         result.message;
 
