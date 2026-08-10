@@ -2,7 +2,7 @@ const IS_DEV =
   self.location.hostname === '127.0.0.1' ||
   self.location.hostname === 'localhost';
 
-const CACHE_VERSION = 'cuenta-tr-v4';
+const CACHE_VERSION = 'cuenta-tr-v5';
 const APP_SHELL_CACHE = `app-shell-${CACHE_VERSION}`;
 const OFFLINE_URL = './offline.html';
 
@@ -21,6 +21,8 @@ const APP_SHELL_ASSETS = [
   './CSS/wallet.css',
 
   './JS/pwa.js',
+  './JS/vendor/simplewebauthn-browser.js',
+  './JS/passkey/passkeyService.js',
 
   './JS/login/login/loginService.js',
   './JS/login/login/loginController.js',
