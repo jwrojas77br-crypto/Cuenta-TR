@@ -2,7 +2,7 @@ const IS_DEV =
   self.location.hostname === '127.0.0.1' ||
   self.location.hostname === 'localhost';
 
-const CACHE_VERSION = 'cuenta-tr-v13';
+const CACHE_VERSION = 'cuenta-tr-v14';
 const APP_SHELL_CACHE = `app-shell-${CACHE_VERSION}`;
 const OFFLINE_URL = './offline.html';
 
