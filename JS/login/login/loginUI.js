@@ -287,7 +287,9 @@ async function validateSecurityCode() {
 window.showSecurityCodeModal = showSecurityCodeModal;
 window.hideSecurityCodeModal = hideSecurityCodeModal;
 
-async function handlePasskeyLogin() {
+async function handlePasskeyLogin(
+    automatic = false
+) {
     if (
         !passkeyLoginButton ||
         passkeyLoginInProgress
@@ -317,7 +319,14 @@ async function handlePasskeyLogin() {
 
     const result =
         await window
-            .authenticateWithPasskey?.();
+            .authenticateWithPasskey?.({
+                preferredCredentialId:
+                    automatic
+                        ? localStorage.getItem(
+                            'tr-passkey-credential-id'
+                        )
+                        : ''
+            });
 
     if (
         !result?.success ||
@@ -375,6 +384,13 @@ async function handlePasskeyLogin() {
         '1'
     );
 
+    if (result.credentialId) {
+        localStorage.setItem(
+            'tr-passkey-credential-id',
+            result.credentialId
+        );
+    }
+
     markAuthenticatedSession();
 
     passkeyLoginResponse.textContent =
@@ -420,13 +436,15 @@ async function tryAutomaticPasskeyLogin() {
         '1'
     );
 
-    await handlePasskeyLogin();
+    await handlePasskeyLogin(true);
 }
 
 passkeyLoginButton
     ?.addEventListener(
         'click',
-        handlePasskeyLogin
+        function () {
+            handlePasskeyLogin(false);
+        }
     );
 
 window.addEventListener(

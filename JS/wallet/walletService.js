@@ -39,6 +39,11 @@ async function getWalletSummaryFromBackend() {
                 'No se pudo consultar la cartera.',
             user: data?.user,
             wallet: data?.wallet,
+            passkey:
+                data?.passkey || {
+                    enabled: false,
+                    count: 0
+                },
             movements:
                 Array.isArray(data?.movements)
                     ? data.movements

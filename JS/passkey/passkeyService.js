@@ -136,7 +136,10 @@ async function activatePasskeyForCurrentUser() {
                 verificationResult
                     .data
                     ?.message ||
-                'No se pudo verificar la passkey.'
+                'No se pudo verificar la passkey.',
+
+            credentialId:
+                registrationResponse.id
         };
 
     } catch (error) {
@@ -175,7 +178,9 @@ async function activatePasskeyForCurrentUser() {
     }
 }
 
-async function authenticateWithPasskey() {
+async function authenticateWithPasskey(
+    options = {}
+) {
     if (!browserSupportsPasskeys()) {
         return {
             success: false,
@@ -188,7 +193,14 @@ async function authenticateWithPasskey() {
         const optionsResult =
             await requestPasskeyJson(
                 '/api/passkeys/login/options',
-                {}
+                {
+                    credentialId:
+                        String(
+                            options
+                                .preferredCredentialId ||
+                            ''
+                        ).trim()
+                }
             );
 
         if (
@@ -248,6 +260,9 @@ async function authenticateWithPasskey() {
                     .data
                     ?.authToken,
 
+            credentialId:
+                authenticationResponse.id,
+
             user:
                 verificationResult
                     .data
@@ -279,8 +294,62 @@ async function authenticateWithPasskey() {
     }
 }
 
+
+async function deactivatePasskeysForCurrentUser() {
+    const authToken =
+        sessionStorage.getItem(
+            'tr-auth-token'
+        );
+
+    if (!authToken) {
+        return {
+            success: false,
+            message:
+                'No existe una sesión activa.'
+        };
+    }
+
+    try {
+        const result =
+            await requestPasskeyJson(
+                '/api/passkeys/deactivate',
+                {
+                    authToken:
+                        authToken
+                }
+            );
+
+        return {
+            success:
+                Boolean(
+                    result.httpOk &&
+                    result.data?.success
+                ),
+
+            message:
+                result.data?.message ||
+                'No se pudo desactivar el acceso rápido.'
+        };
+
+    } catch (error) {
+        console.error(
+            'Error desactivando passkeys:',
+            error
+        );
+
+        return {
+            success: false,
+            message:
+                'No fue posible comunicarse con el servicio.'
+        };
+    }
+}
+
 window.authenticateWithPasskey =
     authenticateWithPasskey;
+
+window.deactivatePasskeysForCurrentUser =
+    deactivatePasskeysForCurrentUser;
 
 window.browserSupportsPasskeys =
     browserSupportsPasskeys;

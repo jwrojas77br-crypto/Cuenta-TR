@@ -77,6 +77,20 @@ async function loadWalletSummary() {
                 formattedBalance
         },
 
+        passkey: {
+            enabled:
+                Boolean(
+                    response.passkey
+                        ?.enabled
+                ),
+
+            count:
+                Number(
+                    response.passkey
+                        ?.count || 0
+                )
+        },
+
         movements:
             response.movements.map(
                 prepareWalletMovement

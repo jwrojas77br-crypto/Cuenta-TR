@@ -158,6 +158,7 @@ function closeTransferModal() {
 }
 
 let transferInProgress = false;
+let walletHasActivePasskey = false;
 
 
 function setTransferLoading(isLoading) {
@@ -306,28 +307,16 @@ async function handleTransferSubmit() {
 }
 
 function renderPasskeySetupState() {
-    const isEnabled =
-        localStorage.getItem(
-            'tr-passkey-enabled'
-        ) === '1';
-
-    if (isEnabled) {
-        localStorage.setItem(
-            'tr-passkey-registered',
-            '1'
-        );
-    }
-
     if (passkeySetupTitle) {
         passkeySetupTitle.textContent =
-            isEnabled
+            walletHasActivePasskey
                 ? 'Acceso rápido activado'
                 : 'Acceso rápido';
     }
 
     if (activatePasskeyButton) {
         activatePasskeyButton.textContent =
-            isEnabled
+            walletHasActivePasskey
                 ? 'Desactivar'
                 : 'Activar';
 
@@ -342,44 +331,54 @@ async function handleActivatePasskey() {
         return;
     }
 
-    const isEnabled =
-        localStorage.getItem(
-            'tr-passkey-enabled'
-        ) === '1';
+    if (walletHasActivePasskey) {
+        activatePasskeyButton.disabled =
+            true;
 
-    if (isEnabled) {
+        activatePasskeyButton.textContent =
+            'Desactivando...';
+
+        passkeySetupResponse.textContent =
+            'Revocando el acceso por huella o PIN...';
+
+        passkeySetupResponse.classList.remove(
+            'error',
+            'success'
+        );
+
+        const deactivateResult =
+            await window
+                .deactivatePasskeysForCurrentUser?.();
+
+        if (!deactivateResult?.success) {
+            passkeySetupResponse.textContent =
+                deactivateResult?.message ||
+                'No se pudo desactivar el acceso rápido.';
+
+            passkeySetupResponse.classList.add(
+                'error'
+            );
+
+            renderPasskeySetupState();
+            return;
+        }
+
+        walletHasActivePasskey = false;
+
         localStorage.removeItem(
             'tr-passkey-enabled'
         );
 
-        passkeySetupResponse.textContent =
-            'El acceso automático quedó desactivado. Aún puedes ingresar manualmente con huella o PIN.';
-
-        passkeySetupResponse.classList.remove(
-            'error'
-        );
-
-        passkeySetupResponse.classList.add(
-            'success'
-        );
-
-        renderPasskeySetupState();
-        return;
-    }
-
-    const passkeyWasRegistered =
-        localStorage.getItem(
+        localStorage.removeItem(
             'tr-passkey-registered'
-        ) === '1';
+        );
 
-    if (passkeyWasRegistered) {
-        localStorage.setItem(
-            'tr-passkey-enabled',
-            '1'
+        localStorage.removeItem(
+            'tr-passkey-credential-id'
         );
 
         passkeySetupResponse.textContent =
-            'El acceso automático quedó activado.';
+            deactivateResult.message;
 
         passkeySetupResponse.classList.remove(
             'error'
@@ -438,6 +437,15 @@ async function handleActivatePasskey() {
         'tr-passkey-registered',
         '1'
     );
+
+    if (result.credentialId) {
+        localStorage.setItem(
+            'tr-passkey-credential-id',
+            result.credentialId
+        );
+    }
+
+    walletHasActivePasskey = true;
 
     passkeySetupResponse.textContent =
         result.message;
@@ -556,6 +564,11 @@ async function initializeWallet() {
         walletCurrency.textContent =
             result.wallet.currency;
     }
+
+    walletHasActivePasskey =
+        Boolean(
+            result.passkey?.enabled
+        );
 
     renderPasskeySetupState();
 
