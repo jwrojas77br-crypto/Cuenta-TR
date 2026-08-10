@@ -195,6 +195,7 @@
     color: var(--primary-dark);
     font-weight: 800;
     cursor: pointer;
+    margin-top: 4px;
 }
 
 .passkey-login-button
