@@ -2,7 +2,7 @@ const IS_DEV =
   self.location.hostname === '127.0.0.1' ||
   self.location.hostname === 'localhost';
 
-const CACHE_VERSION = 'cuenta-tr-v14';
+const CACHE_VERSION = 'cuenta-tr-v15';
 const APP_SHELL_CACHE = `app-shell-${CACHE_VERSION}`;
 const OFFLINE_URL = './offline.html';
 
@@ -44,9 +44,9 @@ const APP_SHELL_ASSETS = [
   './JS/login/olvideClave/olvideClaveUI.js',
 
   './img/TR Icono.png',
-  './img/icon-192.png',
-  './img/icon-512.png',
-  './img/icon-maskable-512.png',
+  './img/icon-192-v2.png',
+  './img/icon-512-v2.png',
+  './img/icon-maskable-512-v2.png',
 ];
 
 self.addEventListener('install', (event) => {
