@@ -184,7 +184,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 6px;
     padding: 1rem 1.1rem;
     border:
         1px solid
@@ -195,7 +195,6 @@
     color: var(--primary-dark);
     font-weight: 800;
     cursor: pointer;
-    margin-top: 4px;
 }
 
 .passkey-login-button
@@ -210,6 +209,15 @@
 .passkey-login-button:disabled {
     opacity: 0.65;
     cursor: not-allowed;
+}
+
+#password-error:empty,
+#server-response:empty {
+    display: none;
+}
+
+.passkey-login-button {
+    margin-top: 0;
 }
 
 .passkey-login-response {
