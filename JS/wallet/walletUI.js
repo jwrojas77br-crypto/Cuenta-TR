@@ -83,6 +83,11 @@ const passkeySetupResponse =
         'passkey-setup-response'
     );
 
+const passkeySetupTitle =
+    document.getElementById(
+        'passkey-setup-title'
+    );
+
 
 function isWalletLocalDevelopment() {
     return [
@@ -300,8 +305,91 @@ async function handleTransferSubmit() {
     }, 1200);
 }
 
+function renderPasskeySetupState() {
+    const isEnabled =
+        localStorage.getItem(
+            'tr-passkey-enabled'
+        ) === '1';
+
+    if (isEnabled) {
+        localStorage.setItem(
+            'tr-passkey-registered',
+            '1'
+        );
+    }
+
+    if (passkeySetupTitle) {
+        passkeySetupTitle.textContent =
+            isEnabled
+                ? 'Acceso rápido activado'
+                : 'Acceso rápido';
+    }
+
+    if (activatePasskeyButton) {
+        activatePasskeyButton.textContent =
+            isEnabled
+                ? 'Desactivar'
+                : 'Activar';
+
+        activatePasskeyButton.disabled =
+            false;
+    }
+}
+
+
 async function handleActivatePasskey() {
     if (!activatePasskeyButton) {
+        return;
+    }
+
+    const isEnabled =
+        localStorage.getItem(
+            'tr-passkey-enabled'
+        ) === '1';
+
+    if (isEnabled) {
+        localStorage.removeItem(
+            'tr-passkey-enabled'
+        );
+
+        passkeySetupResponse.textContent =
+            'El acceso automático quedó desactivado. Aún puedes ingresar manualmente con huella o PIN.';
+
+        passkeySetupResponse.classList.remove(
+            'error'
+        );
+
+        passkeySetupResponse.classList.add(
+            'success'
+        );
+
+        renderPasskeySetupState();
+        return;
+    }
+
+    const passkeyWasRegistered =
+        localStorage.getItem(
+            'tr-passkey-registered'
+        ) === '1';
+
+    if (passkeyWasRegistered) {
+        localStorage.setItem(
+            'tr-passkey-enabled',
+            '1'
+        );
+
+        passkeySetupResponse.textContent =
+            'El acceso automático quedó activado.';
+
+        passkeySetupResponse.classList.remove(
+            'error'
+        );
+
+        passkeySetupResponse.classList.add(
+            'success'
+        );
+
+        renderPasskeySetupState();
         return;
     }
 
@@ -346,6 +434,11 @@ async function handleActivatePasskey() {
         '1'
     );
 
+    localStorage.setItem(
+        'tr-passkey-registered',
+        '1'
+    );
+
     passkeySetupResponse.textContent =
         result.message;
 
@@ -353,8 +446,7 @@ async function handleActivatePasskey() {
         'success'
     );
 
-    activatePasskeyButton.textContent =
-        'Acceso activado';
+    renderPasskeySetupState();
 }
 
 openTransferButton?.addEventListener(
@@ -464,6 +556,8 @@ async function initializeWallet() {
         walletCurrency.textContent =
             result.wallet.currency;
     }
+
+    renderPasskeySetupState();
 
     const recentMovements =
         Array.isArray(result.movements)

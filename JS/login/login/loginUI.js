@@ -32,7 +32,13 @@ const passkeyLoginResponse =
         'passkey-login-response'
     );
 
+const loginSubmitButton =
+    loginForm?.querySelector(
+        '.submit-button[type="submit"]'
+    );
+
 let pendingRedirectUrl = '';
+let passkeyLoginInProgress = false;
 
 if (sessionStorage.getItem('tr-authenticated') === '1') {
     window.location.replace('../HTML/wallet.html');
@@ -282,12 +288,22 @@ window.showSecurityCodeModal = showSecurityCodeModal;
 window.hideSecurityCodeModal = hideSecurityCodeModal;
 
 async function handlePasskeyLogin() {
-    if (!passkeyLoginButton) {
+    if (
+        !passkeyLoginButton ||
+        passkeyLoginInProgress
+    ) {
         return;
     }
 
+    passkeyLoginInProgress = true;
+
     passkeyLoginButton.disabled =
         true;
+
+    if (loginSubmitButton) {
+        loginSubmitButton.disabled =
+            true;
+    }
 
     passkeyLoginButton.textContent =
         'Verificando dispositivo...';
@@ -331,6 +347,13 @@ async function handlePasskeyLogin() {
         passkeyLoginButton.disabled =
             false;
 
+        if (loginSubmitButton) {
+            loginSubmitButton.disabled =
+                false;
+        }
+
+        passkeyLoginInProgress = false;
+
         passkeyLoginButton.textContent =
             'Ingresar con huella o PIN';
 
@@ -344,6 +367,11 @@ async function handlePasskeyLogin() {
 
     localStorage.setItem(
         'tr-passkey-enabled',
+        '1'
+    );
+
+    localStorage.setItem(
+        'tr-passkey-registered',
         '1'
     );
 
@@ -526,6 +554,17 @@ if (loginForm) {
 
     loginForm.addEventListener('submit', async (event) => {
         event.preventDefault();
+
+        if (passkeyLoginInProgress) {
+            serverResponse.textContent =
+                'Espera mientras validamos el acceso con tu dispositivo.';
+
+            serverResponse.classList.remove(
+                'server-error'
+            );
+
+            return;
+        }
 
         if (!validateLoginFields()) {
             serverResponse.textContent = 'Revisa los campos marcados antes de continuar.';
