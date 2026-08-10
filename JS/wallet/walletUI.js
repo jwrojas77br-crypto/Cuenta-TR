@@ -73,6 +73,16 @@ const transferResponse =
         'transfer-response'
     );
 
+const activatePasskeyButton =
+    document.getElementById(
+        'activate-passkey-button'
+    );
+
+const passkeySetupResponse =
+    document.getElementById(
+        'passkey-setup-response'
+    );
+
 
 function isWalletLocalDevelopment() {
     return [
@@ -290,6 +300,58 @@ async function handleTransferSubmit() {
     }, 1200);
 }
 
+async function handleActivatePasskey() {
+    if (!activatePasskeyButton) {
+        return;
+    }
+
+    activatePasskeyButton.disabled =
+        true;
+
+    activatePasskeyButton.textContent =
+        'Activando...';
+
+    passkeySetupResponse.textContent =
+        'Confirma tu identidad en el teléfono.';
+
+    passkeySetupResponse.classList.remove(
+        'error',
+        'success'
+    );
+
+    const result =
+        await window
+            .activatePasskeyForCurrentUser?.();
+
+    if (!result?.success) {
+        passkeySetupResponse.textContent =
+            result?.message ||
+            'No se pudo activar el acceso rápido.';
+
+        passkeySetupResponse.classList.add(
+            'error'
+        );
+
+        activatePasskeyButton.disabled =
+            false;
+
+        activatePasskeyButton.textContent =
+            'Intentar nuevamente';
+
+        return;
+    }
+
+    passkeySetupResponse.textContent =
+        result.message;
+
+    passkeySetupResponse.classList.add(
+        'success'
+    );
+
+    activatePasskeyButton.textContent =
+        'Acceso activado';
+}
+
 openTransferButton?.addEventListener(
     'click',
     openTransferModal
@@ -338,6 +400,12 @@ document.addEventListener(
         }
     }
 );
+
+activatePasskeyButton
+    ?.addEventListener(
+        'click',
+        handleActivatePasskey
+    );
 
 async function initializeWallet() {
     if (walletResponse) {

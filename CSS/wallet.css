@@ -790,3 +790,99 @@ a {
         animation: none;
     }
 }
+
+.passkey-setup-card {
+    display: grid;
+    grid-template-columns:
+        auto 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    border:
+        1px solid
+        rgba(74, 105, 0, 0.16);
+    border-radius: 22px;
+    background:
+        rgba(255, 255, 255, 0.82);
+    box-shadow:
+        0 12px 28px
+        rgba(63, 82, 24, 0.08);
+}
+
+.passkey-setup-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background:
+        rgba(154, 223, 24, 0.2);
+    color:
+        var(--wallet-primary-deep);
+}
+
+.passkey-setup-icon
+.material-symbols-outlined {
+    font-size: 30px;
+}
+
+.passkey-setup-content h2 {
+    margin: 0 0 4px;
+    color: var(--wallet-text);
+    font-size: 1rem;
+}
+
+.passkey-setup-content p {
+    margin: 0;
+    color: var(--wallet-muted);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.activate-passkey-button {
+    min-height: 44px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 14px;
+    background:
+        var(--wallet-primary);
+    color: #ffffff;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.activate-passkey-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.passkey-setup-response {
+    grid-column: 1 / -1;
+    min-height: 18px;
+    margin: 0;
+    color: var(--wallet-muted);
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+.passkey-setup-response.error {
+    color: var(--wallet-danger);
+}
+
+.passkey-setup-response.success {
+    color: var(--wallet-success);
+    font-weight: 700;
+}
+
+@media (max-width: 420px) {
+    .passkey-setup-card {
+        grid-template-columns:
+            auto 1fr;
+    }
+
+    .activate-passkey-button {
+        grid-column: 1 / -1;
+        width: 100%;
+        min-height: 52px;
+    }
+}
