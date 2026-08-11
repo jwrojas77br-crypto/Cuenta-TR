@@ -2,7 +2,9 @@
     const defaultProxyBaseUrl = 'https://cuentatr-dev.multiservicosrojas.workers.dev';
 
     const appConfig = Object.freeze({
-        PROXY_BASE_URL: defaultProxyBaseUrl
+        PROXY_BASE_URL: defaultProxyBaseUrl,
+        PASSKEY_RP_ID:
+            'jwrojas77br-crypto.github.io'
     });
 
     function resolveProxyBaseUrl() {

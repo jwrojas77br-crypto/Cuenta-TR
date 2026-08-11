@@ -100,7 +100,8 @@ async function submitNewAccessConfiguration(payload) {
 		success: backendResponse.success,
 		status: backendResponse.status,
 		message: backendResponse.message,
-		requestId: backendResponse.requestId
+		requestId: backendResponse.requestId,
+		authToken: backendResponse.authToken
 	};
 }
 

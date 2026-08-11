@@ -55,6 +55,16 @@ async function requestPasskeyJson(
 
 
 async function activatePasskeyForCurrentUser() {
+    const originError =
+        getPasskeyOriginError();
+
+    if (originError) {
+        return {
+            success: false,
+            message: originError
+        };
+    }
+
     if (!browserSupportsPasskeys()) {
         return {
             success: false,
@@ -181,6 +191,16 @@ async function activatePasskeyForCurrentUser() {
 async function authenticateWithPasskey(
     options = {}
 ) {
+    const originError =
+        getPasskeyOriginError();
+
+    if (originError) {
+        return {
+            success: false,
+            message: originError
+        };
+    }
+
     if (!browserSupportsPasskeys()) {
         return {
             success: false,
@@ -292,6 +312,33 @@ async function authenticateWithPasskey(
                 'No se pudo ingresar con la passkey.'
         };
     }
+}
+
+
+function getPasskeyOriginError() {
+    const configuredRpId = String(
+        window.APP_CONFIG
+            ?.PASSKEY_RP_ID || ''
+    ).trim();
+
+    const currentHostname =
+        window.location.hostname;
+
+    if (!window.isSecureContext) {
+        return 'El acceso rapido requiere una conexion HTTPS segura.';
+    }
+
+    if (
+        configuredRpId &&
+        currentHostname !== configuredRpId &&
+        !currentHostname.endsWith(
+            `.${configuredRpId}`
+        )
+    ) {
+        return 'Para activar el acceso rapido, abre la version publicada de Cuenta TR. No puede registrarse desde 127.0.0.1 o localhost.';
+    }
+
+    return '';
 }
 
 
